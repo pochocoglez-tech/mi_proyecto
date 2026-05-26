@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Blog</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background:#f4f4f4;
+            margin:0;
+            padding:0;
+        }
+
+        header{
+            background:#222;
+            color:white;
+            padding:20px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .botones a{
+            text-decoration:none;
+            background:#007bff;
+            color:white;
+            padding:10px 15px;
+            border-radius:5px;
+            margin-left:10px;
+        }
+        .botones button{
+            background:#dc3545;
+            color:white;
+            border:none;
+            padding:10px 15px;
+            border-radius:5px;
+            cursor:pointer;
+            margin-left:10px;
+            }
+
+        .contenedor{
+            width:80%;
+            margin:auto;
+            margin-top:30px;
+        }
+
+        .post{
+            background:white;
+            padding:20px;
+            margin-bottom:20px;
+            border-radius:10px;
+            box-shadow:0px 2px 5px rgba(0,0,0,0.1);
+        }
+
+    </style>
+
+</head>
+<body>
+
+<header>
+
+    <h1>Mi Blog Personal</h1>
+
+    <div class="botones">
+
+        {% if user.is_authenticated %}
+
+            <span>Hola, {{ user.username }}</span>
+
+            <form action="/accounts/logout/" method="post" style="display:inline;">
+
+    {% csrf_token %}
+
+    <button type="submit">Cerrar sesión</button>
+
+</form>
+        {% else %}
+
+            <a href="/accounts/login/">Iniciar sesión</a>
+            <a href="/registro/">Registrarse</a>
+
+        {% endif %}
+
+    </div>
+
+</header>
+
+<div class="contenedor">
+
+{% for publicacion in publicaciones %}
+
+<div class="post">
+
+    <h2>{{ publicacion.titulo }}</h2>
+
+    <p>{{ publicacion.contenido }}</p>
+
+    <small>{{ publicacion.fecha }}</small>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>
